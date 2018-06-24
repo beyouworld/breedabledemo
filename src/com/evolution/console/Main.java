@@ -19,13 +19,12 @@ public class Main {
         Genome genome = new Genome(mutations);
 
         // Configure genome
-        genome.genes = new ArrayList<>();
-        Gene tailType = new Gene("Tail Type", "Curly", "Straight");
-        Gene color = new Gene("Color", "White", "Red", "Blue", "Black");
-        Gene pattern = new Gene("Pattern", "Polka Dots", "Stripes", "Patches", "Solid");
-        genome.genes.add(tailType);
-        genome.genes.add(color);
-        genome.genes.add(pattern);
+        Gene tailType = new CompleteDominanceGene("Tail Type", "Curly", "Straight");
+        Gene color = new CompleteDominanceGene("Color", "White", "Red", "Blue", "Black");
+        Gene pattern = new CompleteDominanceGene("Pattern", "Polka Dots", "Stripes", "Patches", "Solid");
+        genome.addGene(tailType);
+        genome.addGene(color);
+        genome.addGene(pattern);
 
         // Test subjects
         Individual male = new Individual(genome, Sex.Male, new Chromosome("11111"), new Chromosome("00000"));

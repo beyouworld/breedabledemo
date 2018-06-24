@@ -58,8 +58,8 @@ public class Individual {
 
         result += sex.toString() + "\n";
 
-        for(Gene gene : genome.genes) {
-            result += gene.getName() + ": " + genome.getPhenotype(gene, chromosomes) + "\n";
+        for(Gene gene : genome.getGenes()) {
+            result += gene.getName() + ": " + genome.interpretPhenotype(gene, chromosomes) + "\n";
         }
 
         return result;
