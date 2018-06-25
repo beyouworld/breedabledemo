@@ -9,22 +9,30 @@ public class RandomRecombination implements Mutation {
     @Override
     public Chromosome[] mutate(Chromosome[] input) {
 
-        Chromosome[] result = new Chromosome[2];
+        int numChromosomes = input.length;
+        Chromosome[] result = new Chromosome[numChromosomes];
 
         Random rand = new Random();
         int numAlleles = input[0].Alleles.length;
-        result[0] = new Chromosome(new Boolean[numAlleles]);
-        result[1] = new Chromosome(new Boolean[numAlleles]);
+
+        for(int i = 0; i < numChromosomes; i++) {
+            result[i] = new Chromosome(new Boolean[numAlleles]);
+        }
 
         for(int locus = 0; locus < numAlleles; locus++) {
+
+            // Copy alleles
+            for(int i = 0; i < numChromosomes; i++) {
+                result[i].Alleles[locus] = input[i].Alleles[locus];
+            }
+
             if(rand.nextBoolean()) {
-                // Copy alleles
-                result[0].Alleles[locus] = input[0].Alleles[locus];
-                result[1].Alleles[locus] = input[1].Alleles[locus];
-            } else {
+
                 // Swap alleles
-                result[0].Alleles[locus] = input[1].Alleles[locus];
-                result[1].Alleles[locus] = input[0].Alleles[locus];
+                for(int i = 0; i < numChromosomes - 1; i++) {
+                    int chromosomeToSwap = i + 1 + rand.nextInt(numChromosomes - 1) % numChromosomes;
+                    result[i].Alleles[locus] = input[chromosomeToSwap].Alleles[locus];
+                }
             }
         }
 

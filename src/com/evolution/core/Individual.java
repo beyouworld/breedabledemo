@@ -16,11 +16,23 @@ public class Individual {
         this.chromosomes = chromosomes;
     }
 
-    public Individual mate(Individual mate) {
-        Chromosome[] chromosomes = new Chromosome[2];
-        chromosomes[0] = getRandomChromosome(this.chromosomes); // my genes
-        chromosomes[1] = getRandomChromosome(mate.chromosomes); // mate's genes
-        Individual offspring = new Individual(genome, getRandomSex(), chromosomes);
+    public Individual mate(Individual... mates) {
+        int numChromosomes = this.chromosomes.length;
+
+        for(Individual mate : mates) {
+            if (mate.chromosomes.length > numChromosomes) {
+                numChromosomes = mate.chromosomes.length;
+            }
+        }
+        
+        Chromosome[] combined = new Chromosome[numChromosomes];
+        combined[0] = getRandomChromosome(this.chromosomes); // my genes
+
+        for(int i = 1; i < numChromosomes; i++) {
+            combined[i] = getRandomChromosome(mates[i - 1].chromosomes); // mates' genes
+        }
+
+        Individual offspring = new Individual(genome, getRandomSex(), combined);
 
         return offspring;
     }
